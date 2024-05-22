@@ -368,7 +368,7 @@ var subjectTemplate = template.Must(template.New("subject").Parse(`
 </html>
 `))
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func Handler(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	if path == "/" {
 		mainTemplate.Execute(w, struct {
@@ -411,10 +411,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/", Handler)
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000"
+		port = "80"
 	}
 	log.Printf("Listening on port %s", port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
