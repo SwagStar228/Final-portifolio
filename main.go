@@ -414,7 +414,7 @@ func main() {
 	http.HandleFunc("/", handler)
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "80"
+		port = "3000"
 	}
 	log.Printf("Listening on port %s", port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
