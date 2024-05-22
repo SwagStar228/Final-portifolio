@@ -403,6 +403,7 @@ func main() {
 			http.NotFound(w, r)
 		}
 	})
-
+	log.Println("Site Started")
 	log.Fatal(http.ListenAndServe(":80", nil))
 }
+
