@@ -403,5 +403,5 @@ func main() {
 		}
 	})
 
-	http.ListenAndServe(":80", nil)
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
