@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -366,44 +368,54 @@ var subjectTemplate = template.Must(template.New("subject").Parse(`
 </html>
 `))
 
-func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+func handler(w http.ResponseWriter, r *http.Request) {
+	path := r.URL.Path
+	if path == "/" {
 		mainTemplate.Execute(w, struct {
 			Courses map[string]Course
 		}{Courses: courses})
-	})
+		return
+	}
 
-	http.HandleFunc("/course/", func(w http.ResponseWriter, r *http.Request) {
-		parts := strings.Split(r.URL.Path, "/")
-		if len(parts) >= 3 {
-			courseNumber := parts[2]
-			course, exists := courses[courseNumber]
-			if !exists {
+	parts := strings.Split(path, "/")
+	if len(parts) >= 3 && parts[1] == "course" {
+		courseNumber := parts[2]
+		course, exists := courses[courseNumber]
+		if !exists {
+			http.NotFound(w, r)
+			return
+		}
+		if len(parts) == 3 {
+			courseTemplate.Execute(w, struct {
+				CourseNumber string
+				Course       Course
+			}{CourseNumber: courseNumber, Course: course})
+		} else if len(parts) == 5 && parts[3] == "subject" {
+			subjectIndex, err := strconv.Atoi(parts[4])
+			if err != nil || subjectIndex < 0 || subjectIndex >= len(course.Subjects) {
 				http.NotFound(w, r)
 				return
 			}
-			if len(parts) == 3 {
-				courseTemplate.Execute(w, struct {
-					CourseNumber string
-					Course       Course
-				}{CourseNumber: courseNumber, Course: course})
-			} else if len(parts) == 5 && parts[3] == "subject" {
-				subjectIndex, err := strconv.Atoi(parts[4])
-				if err != nil || subjectIndex < 0 || subjectIndex >= len(course.Subjects) {
-					http.NotFound(w, r)
-					return
-				}
-				subject := course.Subjects[subjectIndex]
-				subjectTemplate.Execute(w, struct {
-					CourseNumber string
-					Subject      Subject
-				}{CourseNumber: courseNumber, Subject: subject})
-			}
+			subject := course.Subjects[subjectIndex]
+			subjectTemplate.Execute(w, struct {
+				CourseNumber string
+				Subject      Subject
+			}{CourseNumber: courseNumber, Subject: subject})
 		} else {
 			http.NotFound(w, r)
 		}
-	})
-	log.Println("Site Started")
-	log.Fatal(http.ListenAndServe(":80", nil))
+		return
+	}
+
+	http.NotFound(w, r)
 }
 
+func main() {
+	http.HandleFunc("/", handler)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "80"
+	}
+	log.Printf("Listening on port %s", port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
+}
