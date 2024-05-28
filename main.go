@@ -304,9 +304,9 @@ var mainTemplate = template.Must(template.New("index").Parse(`
             height: 100vh;
             background-color: #f0f0f0;
             margin: 0;
+            position: relative; /* Добавлено для позиционирования кнопки */
         }
         .container {
-            position: relative; /* Добавлено для позиционирования ссылки */
             background: white;
             padding: 20px;
             border-radius: 8px;
@@ -338,17 +338,20 @@ var mainTemplate = template.Must(template.New("index").Parse(`
             background-color: #0056b3;
         }
         .code-link {
-            position: absolute; /* Позиционирование в правом верхнем углу */
-            top: 10px;
-            right: 10px;
-            font-size: 14px;
-        }
-        .code-link a {
-            color: #007BFF;
+            position: absolute; /* Добавлено для позиционирования */
+            bottom: 20px; /* Позиционирование снизу */
+            right: 20px; /* Позиционирование справа */
+            background-color: #28a745; /* Зеленый цвет для кнопки */
+            color: white;
+            padding: 10px 20px;
             text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-block;
+            transition: background 0.3s;
         }
-        .code-link a:hover {
-            text-decoration: underline;
+        .code-link:hover {
+            background-color: #218838;
         }
     </style>
 </head>
@@ -358,10 +361,8 @@ var mainTemplate = template.Must(template.New("index").Parse(`
         {{range $index, $course := .Courses}}
             <button class="button" onclick="location.href='/course/{{$index}}'">{{$course.Name}}</button>
         {{end}}
-        <div class="code-link">
-            <a href="https://github.com/your-repo/your-project" target="_blank">Посмотреть код</a>
-        </div>
     </div>
+    <a href="https://github.com/SwagStar228/Final-portifolio" class="code-link" target="_blank">Код</a>
 </body>
 </html>
 `))
