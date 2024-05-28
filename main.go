@@ -306,6 +306,7 @@ var mainTemplate = template.Must(template.New("index").Parse(`
             margin: 0;
         }
         .container {
+            position: relative; /* Добавлено для позиционирования ссылки */
             background: white;
             padding: 20px;
             border-radius: 8px;
@@ -336,6 +337,19 @@ var mainTemplate = template.Must(template.New("index").Parse(`
         .button:hover {
             background-color: #0056b3;
         }
+        .code-link {
+            position: absolute; /* Позиционирование в правом верхнем углу */
+            top: 10px;
+            right: 10px;
+            font-size: 14px;
+        }
+        .code-link a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .code-link a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -344,6 +358,9 @@ var mainTemplate = template.Must(template.New("index").Parse(`
         {{range $index, $course := .Courses}}
             <button class="button" onclick="location.href='/course/{{$index}}'">{{$course.Name}}</button>
         {{end}}
+        <div class="code-link">
+            <a href="https://github.com/your-repo/your-project" target="_blank">Посмотреть код</a>
+        </div>
     </div>
 </body>
 </html>
