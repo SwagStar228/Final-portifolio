@@ -312,6 +312,8 @@ var mainTemplate = template.Must(template.New("index").Parse(`
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
         }
         .header {
             font-size: 24px;
@@ -319,7 +321,7 @@ var mainTemplate = template.Must(template.New("index").Parse(`
             margin-bottom: 20px;
         }
         .button {
-            width: 100%;
+            flex: 1;
             padding: 10px;
             margin: 5px 0;
             font-size: 16px;
@@ -329,6 +331,7 @@ var mainTemplate = template.Must(template.New("index").Parse(`
             transition: background 0.3s;
             background-color: #007BFF;
             color: white;
+            display: block;
         }
         .button:hover {
             background-color: #0056b3;
@@ -366,9 +369,11 @@ var courseTemplate = template.Must(template.New("course").Parse(`
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
         }
         .button {
-            width: 100%;
+            flex: 1;
             padding: 10px;
             margin: 5px 0;
             font-size: 16px;
@@ -378,6 +383,7 @@ var courseTemplate = template.Must(template.New("course").Parse(`
             transition: background 0.3s;
             background-color: #007BFF;
             color: white;
+            display: block;
         }
         .button:hover {
             background-color: #0056b3;
@@ -415,9 +421,11 @@ var subjectTemplate = template.Must(template.New("subject").Parse(`
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
         }
         .button {
-            width: 100%;
+            flex: 1;
             padding: 10px;
             margin: 5px 0;
             font-size: 16px;
@@ -427,6 +435,7 @@ var subjectTemplate = template.Must(template.New("subject").Parse(`
             transition: background 0.3s;
             background-color: #007BFF;
             color: white;
+            display: block;
         }
         .button:hover {
             background-color: #0056b3;
