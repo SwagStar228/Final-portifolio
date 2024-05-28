@@ -294,7 +294,7 @@ var mainTemplate = template.Must(template.New("index").Parse(`
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Курсы</title>
+    <title>Портфолио</title>
     <style>
         body {
             font-family: Arial, sans-serif;
